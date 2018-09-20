@@ -10,20 +10,52 @@ library(tidyverse)
 ```
 
 _Problem 1_
-Create a data frame comprised of:
-  A random sample of size 10 from a uniform[0, 5] distribution
-  A logical vector indicating whether elements of the sample are greater than 2
-  A (length-10) character vector
-  A (length-10) factor vector
+
+Create a data frame
+
 ```{r create dataframe}
+set.seed(1)
+
 df = tibble(
-  vec_numeric = sample(1:5, 10, replace = T),
-  vec_logical = as.logical(vec_numeric > 2),
-  vec_char = c('WNV', 'Ebola Virus', 'Influenza', 'Rabies', 'Poliovirus', 'Dengue', 'HIV', 'Measles', 'VZV', 'HPV'),
-  vec_factor = as.factor(c('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'))
+  vec_numeric = runif(10, 1, 5),
+  vec_logical = vec_numeric > 2,
+  vec_char = c('Malaria', 'Ebola Virus', 'Influenza', 'MRSA', 'Poliovirus', 'Dengue', 'E. Coli', 'Measles', 'VZV', 'MERS'),
+  vec_factor = factor(c('Parasite', 'Virus', 'Virus', 'Bacteria', 'Virus', 'Virus', 'Bacteria', 'Virus', 'Virus', 'Virus'))
 )
 
 df
 ```
+
+Take the mean of each variable
+```{r means}
+mean(df$vec_numeric)
+mean(df$vec_logical)
+mean(df$vec_char)
+mean(df$vec_factor)
+```
+the mean function provides a numeric output for the numeric and logical vectors and provides a NA output for the character and factor vectors. The numeric and logical vectors contain values that can be used in a mathematical function (the logical vector's TRUE/FALSE values can be seen as 1's and 0's) while the character and factor vectors contain non-numeric values.
+
+Coercing logical, character, and factor variables to numeric
+```{r eval=FALSE}
+as.numeric(df$vec_logical)
+as.numeric(df$vec_char)
+as.numeric(df$vec_factor)
+```
+ >When coercing the logical, character, and factor vectors the following happened:
+ 
+  * The logical vector became a series of 1's and 0's, with 1's corresponding to true statements and 0's  corresponding to false statements.
+  * The character vector became a series of NA's
+  * The factor vector became numeric values 1 through 3, with each number assigned to a specific value (1 = Bacteria, 2 = Parasite, 3 = Virus; number assignment seems to be alphabetical)
+
+```{r eval=FALSE}
+as.numeric(as.factor(df$vec_char))
+as.numeric(as.character(df$vec_factor))
+```
+When the character vector was coerced to a factor vector, the values were assigned numeric levels by alphabetical order. When this factor vector was coerced to a numeric vector these numeric levels were outputted in the original order the character values were in.
+
+When the factor vector was coerced to a character vector, the each value became a string of characters. When this character vector was coerced to a numeric vector the output was a series of NA's, as character strings cannot be coerced to numbers.
+
+***
+_Problem 2_
 
 
