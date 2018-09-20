@@ -1,17 +1,17 @@
 ---
 title: "p8105_hw1_mp3653"
 author: "Matthew Perrotta"
-date: "September 18, 2018"
+date: "September 21, 2018"
 output: github_document
 ---
-_Load tidyverse package_
+*Load tidyverse package*
 ```{r tidyverse}
 library(tidyverse)
 ```
 
-__Problem 1__
+## **Problem 1**
 
-_Create a data frame_
+*Create a data frame*
 ```{r create dataframe}
 set.seed(1)
 
@@ -23,19 +23,26 @@ df_p1 = tibble(
 )
 ```
 
-_Take the mean of each variable_
-```{r means}
+*Take the mean of each variable*
+```{r mean calculations for df_p1 variables}
+#vec_numeric
 mean(df_p1$vec_numeric)
+#vec_logical
 mean(df_p1$vec_logical)
+#vec_char
 mean(df_p1$vec_char)
+#vec_factor
 mean(df_p1$vec_factor)
 ```
-the mean function provides a numeric output for the numeric and logical vectors and provides a NA output for the character and factor vectors. The numeric and logical vectors contain values that can be used in a mathematical function (the logical vector's TRUE/FALSE values can be seen as 1's and 0's) while the character and factor vectors contain non-numeric values.
+The mean function provides a numeric output for the numeric and logical vectors and provides an NA output for the character and factor vectors. The numeric and logical vectors contain values that can be used in a mathematical function (the logical vector's TRUE/FALSE values can be seen as 1's and 0's) while the character and factor vectors contain non-numeric values.
 
-_Coercing logical, character, and factor variables to numeric_
+*Coercing logical, character, and factor variables to numeric*
 ```{r eval = FALSE}
+#vec_logical
 as.numeric(df$vec_logical)
+#vec_char
 as.numeric(df$vec_char)
+#vec_factor
 as.numeric(df$vec_factor)
 ```
  >When coercing the logical, character, and factor vectors the following happened:
@@ -44,8 +51,11 @@ as.numeric(df$vec_factor)
   * The character vector became a series of NA's
   * The factor vector became numeric values 1 through 3, with each number assigned to a specific value (1 = Bacteria, 2 = Parasite, 3 = Virus; number assignment seems to be alphabetical)
 
+*multiple coercions*
 ```{r eval = FALSE}
+#vec_char -> factor variable -> numeric variable
 as.numeric(as.factor(df$vec_char))
+#vec_factor -> character variable -> numeric variable
 as.numeric(as.character(df$vec_factor))
 ```
 When the character vector was coerced to a factor vector, the values were assigned numeric levels by alphabetical order. When this factor vector was coerced to a numeric vector these numeric levels were outputted in the original order the character values were in.
@@ -53,9 +63,9 @@ When the character vector was coerced to a factor vector, the values were assign
 When the factor vector was coerced to a character vector, the each value became a string of characters. When this character vector was coerced to a numeric vector the output was a series of NA's, as character strings cannot be coerced to numbers.
 
 ***
-__Problem 2__
+## **Problem 2**
 
-_Create a data frame_
+*Create a data frame*
 ```{r create data frame}
 set.seed(1)
 
@@ -68,12 +78,13 @@ df_p2 = tibble(
 )
 ```
 
-_Size of Dataset_
+*Size of Dataset*
 
 The data frame df_p2 has `r nrow(df_p2)` rows and `r ncol(df_p2)` columns. The variable x in df_p2 has a mean of `r mean(df_p2$x)`. The proportion of true statements is `r mean(df_p2$gz_logical)`.
 
-_Scatterplots_
-Plot 1. Scatterplot with points colored by logical vector
+*Scatterplots*
+
+**Plot 1.** Scatterplot with points colored by logical vector
 ```{r}
 ggplot(df_p2, aes(x, y, color = gz_logical)) + geom_point()
 ```
@@ -83,14 +94,16 @@ ggsave("./Plot_1.pdf")
 
 The color scale for Plot 1 is binary reflecting the binary nature of the logical vector, with only two possible values of TRUE(1) or FALSE(0).
 
-Plot 2. Scatterplot with points colored by numeric vector
+
+**Plot 2.** Scatterplot with points colored by numeric vector
 ```{r}
 ggplot(df_p2, aes(x, y, color = gz_numeric)) + geom_point()
 ```
 
 The color scale for Plot 2 is a continuous color gradation reflecting how R interprets numeric values. While there are only two values (1 and 0) in the numeric variable, R places the values on a continuous scale.
 
-Plot 3. Scatterplot with points colored by logical vector
+
+**Plot 3.** Scatterplot with points colored by logical vector
 ```{r}
 ggplot(df_p2, aes(x, y, color = gz_factor)) + geom_point()
 ```
