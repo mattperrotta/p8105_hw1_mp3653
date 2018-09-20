@@ -95,9 +95,3 @@ Plot 3. Scatterplot with points colored by logical vector
 ggplot(df_p2, aes(x, y, color = gz_factor)) + geom_point()
 ```
 The color scale for Plot 3 is binary as the factor vector contains only two levels.
-
-Save first plot to project directory
-```{r}
-ggsave("./Plot_1.pdf")
-```
-
